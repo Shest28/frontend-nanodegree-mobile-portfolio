@@ -1,3 +1,14 @@
+@media print {
+  * { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; }
+  a, a:visited { color: #444 !important; text-decoration: underline; }
+  a[href]:after { content: " (" attr(href) ")"; }
+  tr, img { page-break-inside: avoid; }
+  img { max-width: 100% !important; }
+  @page { margin: 0.5cm; }
+  p, h2, h3 { orphans: 3; widows: 3; }
+  h2, h3{ page-break-after: avoid; }
+}
+
 html {
   font-size: 100%;
   overflow-y: scroll;
@@ -5,7 +16,7 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: none;
 }
-body { margin: 0; font-size: 16px; line-height: 1.61; font-weight: 100%; }
+body { margin: 0; font-size: 14px; line-height: 1.61; font-weight: 400; }
 body, button, input, select, textarea { font-family: 'Open Sans', sans-serif; color: #333; }
 
 a { color: #12C; }
@@ -32,7 +43,7 @@ header p span { font-size: 0.8em; font-weight: normal;}
 }
 
 .content { padding: 1em 1em; }
-.content li { list-style-type: none; font-size: 1.2em;}
+.content li { list-style-type: none; font-size: 1.1em;}
 li img { float:left; padding-right: 1em; }
 li p { font-size: 0.9em; font-style: italic; }
 
@@ -44,6 +55,7 @@ footer span { float: right; font-style: italic; }
 
 /* Smartphones (portrait) */
 @media only screen and (max-width: 480px) {
-  body { font-size: 16px;}
+  body { font-size: 12px;}
   header p { padding-left: 4.5em;}
 }
+

@@ -1,0 +1,11 @@
+CACHE MANIFEST
+# Версия 1.0
+
+CACHE:
+index.html
+img/photo.jpg
+img/profilepic.jpg
+views/images/pizzeria.jpg
+css/style.css
+css/print.css
+js/perfmatters.js
