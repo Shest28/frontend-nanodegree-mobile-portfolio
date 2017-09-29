@@ -1,7 +1,6 @@
 <?php
-header("Cache-Control: public");
-header("Expires: " . date("r", time()+10800));
-header('Last-Modified: Mon, 18 Oct 2010 14:15:00 GMT');
+    header("Cache-Control: public, max-age=315360000");
+    header("Expires: Mon, 01 Jul 2019 00:00:00");
 ?>
 <!DOCTYPE html>
 <html lang="en" manifest="manifest.cache">
@@ -10,22 +9,26 @@ header('Last-Modified: Mon, 18 Oct 2010 14:15:00 GMT');
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="This page contains information about the creator">
     <meta name="author" content="SERGEI SHESTJORA">
-	<!--
-	<meta http-equiv="Cache-Control" content="public">
-	<meta http-equiv="Cache-Control" content="no-store">
-	<meta http-equiv="Cache-Control" content="max-age=347000">
-	<meta http-equiv="Expires" content="Wed, 22 Mar 3205 00:20:05 GMT">
-	-->
-	
-	
 	<meta http-equiv="last-modified" content="Sun, 10 Feb 2013 14:00:46 GMT " />
 	<meta http-equiv="cache-control" content="public" />
 	<meta http-equiv="Expires" content="6000" />
+	<meta http-equiv="Cache-Control" content="max-age=347000">
 	
     <title>Cameron Pittman: Portfolio</title>
 
     <link href="//fonts.googleapis.com/css?family=Open+Sans:400,700" rel="preload" as="font">	
-    <link href="css/print.css" rel="stylesheet" media="print">
+	<style>
+		@media print {
+		  * { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important; -ms-filter: none !important; }
+		  a, a:visited { color: #444 !important; text-decoration: underline; }
+		  a[href]:after { content: " (" attr(href) ")"; }
+		  tr, img { page-break-inside: avoid; }
+		  img { max-width: 100% !important; }
+		  @page { margin: 0.5cm; }
+		  p, h2, h3 { orphans: 3; widows: 3; }
+		  h2, h3{ page-break-after: avoid; }
+		}
+	</style>
 	<style>
 		html {
 		  font-size: 100%;
@@ -76,19 +79,55 @@ header('Last-Modified: Mon, 18 Oct 2010 14:15:00 GMT');
 		  body { font-size: 12px;}
 		  header p { padding-left: 4.5em;}
 		}
+		
+		.photo {
+			width: 40px;
+			height: 40px;
+			border-radius: 40px;
+			float: left;
+			background: url("sprites.png") -130px -92px;
+		}
+		
+		.profilepic {
+			width: 40px;
+			height: 40px;
+			border-radius: 40px;
+			float: left;
+			background: url("sprites.png") -190px -92px;
+		}
+		
+		.title2048 {
+			width: 100px; height: 50px;
+			background: url('sprites.png') -10px -92px;
+		}
+		
+		.webperf {
+			width: 100px; height: 62px;
+			background: url('sprites.png') -10px -10px;
+		}
+		
+		.mobile {
+			width: 100px; height: 61px;
+			background: url('sprites.png') -130px -10px;
+		}	
+		
+		.pizzeria {
+			width: 70px; height: 53px;
+			background: url('sprites.png') -10px -162px;
+		}
 	</style>
   </head>
   <body>
 	<div class="container">
 	  <header>
-        <a href="/"><img src="img/profilepic.png" alt="profilepic" style="border-radius: 40px; float: left;"></a>
+		<a href="/"><div class="profilepic"></div></a>
         <p>Cameron <br><span>Course Developer</span></p>
       </header>
       <div class="hero">
         <strong>I love web development!</strong> This is a template for a simple portfolio. I decided to use it to showcase a few Udacity courses I've taken and some teaching work, but you can use it to showcase any kind of project that you want the world to see :) <br> Contact me: me@email.com
       </div>  
       <header>
-	    <a href="/"><img src="img/photo.png" alt="photo" style="border-radius: 40px; float: left;"></a>
+	    <a href="/"><div class="photo"></div></a>
         <p>Sergei Shestjora<br><span>Student</span></p>
       </header>
       <div class="hero">
@@ -98,25 +137,25 @@ header('Last-Modified: Mon, 18 Oct 2010 14:15:00 GMT');
       <div class="content">
         <ul>
           <li>
-            <img src="img/title2048.png" alt="2048" title="2048">
+			<div class="title2048"></div>
             <a href="project-2048.html">Build Your Own 2048!</a>
             <p>I made my own version of 2048. How cool is that!?</p>
           </li>
 
           <li>
-            <img src="img/webperf.png" alt="webperf">
+			<div class="webperf"></div>
             <a href="project-webperf.html">Website Performance Optimization</a>
             <p>Hey... this class looks familiar.</p>
           </li>
 
           <li>
-            <img src="img/mobile.png" alt="mobile">
+			<div class="mobile"></div>
             <a href="project-mobile.html">Mobile Web Development</a>
             <p>Making mobile apps isn't so hard after all.</p>
           </li>
 
           <li>
-            <img style="width: 100px;" src="views/images/pizzeria.png">
+			<div class="pizzeria"></div>
             <a href="views/pizza.html">Cam's Pizzeria</a>
             <p>Who wants a performant pizza?</p>
           </li>
@@ -128,7 +167,22 @@ header('Last-Modified: Mon, 18 Oct 2010 14:15:00 GMT');
       </footer>
     </div>
     <script async src="https://www.google-analytics.com/analytics.js"></script> 
-    <script async src="js/perfmatters.js"></script>
+    <script async>
+		// Measuring the Critical Rendering Path with Navigation Timing
+		// https://developers.google.com/web/fundamentals/performance/critical-rendering-path/measure-crp
+
+		function logCRP() {
+		  var t = window.performance.timing,
+			dcl = t.domContentLoadedEventStart - t.domLoading,
+			complete = t.domComplete - t.domLoading;
+		  var stats = document.getElementById("crp-stats");
+		  stats.textContent = 'DCL: ' + dcl + 'ms, onload: ' + complete + 'ms';
+		}
+
+		window.addEventListener("load", function(event) {
+		  logCRP();
+		});
+	</script>
   </body>
 
 </html>
